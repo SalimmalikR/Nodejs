@@ -1,0 +1,27 @@
+[
+    {
+        "username":"Salim",
+        "password":"123456",
+        "uid":1
+    },
+    {
+        "username":"Karthi",
+        "password":"karthi",
+        "uid":2
+    },
+    {
+        "username":"Sankar",
+        "password":"sankar",
+        "uid":3
+    },
+    {
+        "username":"jaswanth",
+        "password":"jaswanth",
+        "uid":4
+    },
+    {
+        "username":"Arun",
+        "password":"Arun",
+        "uid":5
+    }
+]
