@@ -1,4 +1,9 @@
+const connection = require('../config/db')
+
 const usermodule=require('../models/users')
+
+const bcrypt= require('bcrypt')
+
 //For read
 const readuser=async(req,res)=>{
     let results =await usermodule.getuser();
@@ -10,27 +15,26 @@ const readuser=async(req,res)=>{
 
 //For Create
 const createuser=async(req, res) => {
-    const id=req.body.id;
     const username=req.body.username;
-    const email=req.body.email;
     const password=req.body.password;
+    const hashpassword=await bcrypt.hash(password, 5);
+    console.log(hashpassword);
 
-    let create=await usermodule.addnewuser(id,username,email,password)
-    if(create==true)
-    res.send('1row affected. User added successfully')
-    else
-    res.send('failed')
+    let create=await usermodule.addnewuser(username,hashpassword)
+    try{
+        res.send('1 row affected')
+    }catch(err){
+        res.send('failed')
+    }
 };
 
 //For Update
 
 const updateuser=async(req,res)=>{
-    const id=req.params.id;
-    const username=req.body.username;
-    const email=req.body.email;
+    const username=req.params.username;
     const password=req.body.password;
 
-    let update=await usermodule.updatenewuser(id,username,email,password)
+    let update=await usermodule.updatenewuser(username,password)
     if(update)
     res.send('updated successfully')
     else
@@ -39,18 +43,27 @@ const updateuser=async(req,res)=>{
 
 //For delete
 const deleteuser=async (req,res)=>{
-    const id=req.params.id;
+    const username=req.params.username;
 
-    let deleted=await usermodule.deleteuser(id)
+    let deleted=await usermodule.deleteuser(username)
     if(deleted)
     res.send('Data Deleted Successfully')
     else
     res.send('Failed to Delete')
 }
 
+//login
+const login=async (req,res)=>{
+    const {username,password}=req.body
+
+        let loginuser=await usermodule.loginuser(username,password)
+        res.send(loginuser)
+}
+
 module.exports={
     readuser,
     createuser,
     updateuser,
-    deleteuser
+    deleteuser,
+    login
 }

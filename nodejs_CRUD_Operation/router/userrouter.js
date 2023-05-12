@@ -1,6 +1,6 @@
 const express=require('express')
 
-const {readuser,createuser,updateuser,deleteuser}=require('../controllers/usercontroller')
+const {readuser,createuser,updateuser,deleteuser,login}=require('../controllers/usercontroller')
 
 const router=require('express').Router()
 
@@ -11,10 +11,13 @@ router.get('/read',readuser)
 router.post('/create',createuser)
 
 //update
-router.put('/update/:id',updateuser)
+router.put('/update/:username',updateuser)
 
 //delete
-router.delete('/delete/:id',deleteuser)
+router.delete('/delete/:username',deleteuser)
+
+//login
+router.post('/login',login)
 
 module.exports=router
 

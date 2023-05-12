@@ -14,5 +14,5 @@ const router=require('./router/userrouter')
 
 app.use(router)
 
-app.listen(5000)
-console.log('port 5000 is running');
+app.listen(6000)
+console.log('port 6000 is running');
