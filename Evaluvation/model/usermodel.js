@@ -4,6 +4,8 @@ const userscontrollers = require('../controllers/userscontrollers')
 
 const jwt = require('jsonwebtoken')
 
+const update=require('../middleware/update')
+
 class usermodel {
 
     //read
@@ -28,47 +30,23 @@ class usermodel {
     }
 
     //update
-    static updatenewuser() {
+    static updatenewuser(req, res, next) {() => {
+            const { username } = req.params;
+            const { password } = req.body;
+            console.log(username);
+            console.log(password);
+            const query = `UPDATE userdatas SET password='${password}' WHERE username=${username}`;
+            connection.query(query, (err,affectedRows, results) => {
+                if (err) {
+                    res.send('Error querying MySQL:', err);
+                }
 
-        return new Promise(resolve => {
-            verifyToken, (req, res, next) => {
-                const { username } = req.params;
-                const { password } = req.body;
-
-                const query = `UPDATE users SET password='${password}' WHERE username=${username}`;
-                connection.query(query, (err, results) => {
-                    if (err) {
-                        return resolve('Error querying MySQL:', err);
-                    }
-
-                    if (results.affectedRows === 0) {
-                        return resolve('User not found');
-                    }
-                    return resolve('User information updated successfully');
-                });
-            }
-        });
-
-
-        // Verify JWT token 
-        function verifyToken(req, res, next) {
-            const token = req.headers["authorization"];
-            if (token) {
-                jwt.verify(token, "secret", (err, decoded) => {
-                    if (err) {
-                        res.status(401).send('Access denied=> wrong token');
-                        return;
-                    }
-                    else {
-                        req.password = decoded.password;
-                        next();
-                    }
-                })
-            }
-            else {
-                res.status(401).send('Access denied!');
-            }
-        }
+                if (results.length === 0) {
+                    res.send('User not found');
+                }
+                res.send('User information updated successfully');
+            });
+        };        
     }
 
     //delete

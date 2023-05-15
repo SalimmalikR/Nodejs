@@ -16,5 +16,5 @@ app.use(bodyparser.urlencoded({extended:false}))
 
 app.use(router)
 
-app.listen(3000)
-console.log('Port 3000 is Running.......');
+app.listen(7000)
+console.log('Port 7000 is Running.......');

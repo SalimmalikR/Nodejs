@@ -54,8 +54,6 @@ const login=async (req,res)=>{
         res.send(loginuser)
 };
 
-
-
 module.exports = {
     getuser,
     registeruser,

@@ -1,8 +1,14 @@
 const express=require('express')
 
-const {getuser,registeruser,updateuser,deleteuser, login}=require('../controllers/userscontrollers')
+const {getuser,registeruser,deleteuser, login}=require('../controllers/userscontrollers')
+
+const {updatenewuser}=require('../model/usermodel')
 
 const router=require('express').Router()
+
+const update=require('../middleware/update')
+
+
 
 //read
 router.get('/getuser',getuser)
@@ -11,7 +17,7 @@ router.get('/getuser',getuser)
 router.post('/register',registeruser)
 
 //update
-router.put('/update/:username',updateuser)
+router.put('/update/:username',update,updatenewuser)
 
 //delete
 router.delete('/delete/:username',deleteuser)
@@ -20,4 +26,6 @@ router.delete('/delete/:username',deleteuser)
 router.post('/login', login)
 
 module.exports=router
+
+
 
