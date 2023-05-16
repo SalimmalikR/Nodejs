@@ -7,7 +7,6 @@ const update = (req, res, next) => {
 
             try {
                 req.username = decoded.username;
-                res.send('correct token')
                 next();
             }
             catch (err) {

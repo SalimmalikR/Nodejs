@@ -30,8 +30,9 @@ const registeruser = async (req, res) => {
 //For Update
 
 const updateuser = async (req, res) => {
-
-    let update = await usermodel.updatenewuser()
+    const { username } = req.params;
+    const { password } = req.body;
+    let update = await usermodel.updatenewuser(username,password)
     res.send(update)
 }
 
@@ -47,11 +48,11 @@ const deleteuser = async (req, res) => {
 }
 
 //login
-const login=async (req,res)=>{
-    const {username,password}=req.body
+const login = async (req, res) => {
+    const { username, password } = req.body
 
-        let loginuser=await usermodel.loginuser(username,password)
-        res.send(loginuser)
+    let loginuser = await usermodel.loginuser(username, password)
+    res.send(loginuser)
 };
 
 module.exports = {
