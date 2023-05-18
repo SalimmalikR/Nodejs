@@ -2,6 +2,8 @@ const connection = require('../config/db')
 
 const user = require('../model/model')
 
+const psw = require('../middleware/psw')
+
 //For read
 const readuser = (req, res) => {
 
@@ -32,32 +34,33 @@ const createuser = (req, res) => {
 const updateuser = async (req, res) => {
     const id = req.params.userid;
     const pass  = req.body.password
+    const file=req.file
     console.log(pass);
 
     const find = await user.findByPk(id)
     try {
-        await user.update({ password: pass }, { where: { userid: id } })
+        await user.update({ password: pass ,data:file.filename}, { where: { userid: id } })
         res.send('updaed successfully')
     } catch (error) {
         res.send('error to update')
     }
 }
 
-    //For delete
-    const deleteuser = (req, res) => {
-        const id = req.params.userid;
-        user.destroy({ where: { userid: id } })
-            .then(() => {
-                res.send('Data Deleted Successfully')
-            }).catch((err) => {
-                res.send('Error to delete')
-            })
-    }
+//For delete
+const deleteuser = (req, res) => {
+    const id = req.params.userid;
+    user.destroy({ where: { userid: id } })
+        .then(() => {
+            res.send('Data Deleted Successfully')
+        }).catch((err) => {
+            res.send('Error to delete')
+        })
+}
 
 
-    module.exports = {
-        readuser,
-        createuser,
-        updateuser,
-        deleteuser
-    }
+module.exports = {
+    readuser,
+    createuser,
+    updateuser,
+    deleteuser
+}

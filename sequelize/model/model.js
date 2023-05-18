@@ -18,6 +18,9 @@ const user = sequelize.define('userdetail', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    data:{
+        type: DataTypes.STRING
+    }
 })
 
 sequelize.sync({ alter: true }).then(() => {
